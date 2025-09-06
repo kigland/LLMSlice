@@ -56,10 +56,13 @@ func (e *Elem[T]) Val() T {
 	return e.val
 }
 
-func (s *Slice[T]) Append(item T) {
+func (s *Slice[T]) Append(items ...T) *Slice[T] {
 	s.rw.Lock()
 	defer s.rw.Unlock()
-	s.items = append(s.items, &Elem[T]{val: item})
+	for _, item := range items {
+		s.items = append(s.items, &Elem[T]{val: item})
+	}
+	return s
 }
 
 func (s *Slice[T]) Get() TContext[T] {

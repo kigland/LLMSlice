@@ -9,7 +9,7 @@ type SliceM[T any] struct {
 	rw         sync.RWMutex
 }
 
-func (s *SliceM[T]) Append(key string, item T) {
+func (s *SliceM[T]) Append(key string, items ...T) *SliceM[T] {
 	s.rw.Lock()
 	defer s.rw.Unlock()
 	if s.items == nil {
@@ -21,7 +21,8 @@ func (s *SliceM[T]) Append(key string, item T) {
 	if s.items[key] == nil {
 		s.items[key] = &Slice[T]{}
 	}
-	s.items[key].Append(item)
+	s.items[key].Append(items...)
+	return s
 }
 
 func (s *SliceM[T]) Get(key string) TContext[T] {
