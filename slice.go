@@ -20,18 +20,30 @@ type Elem[T any] struct {
 }
 
 func (e *Elem[T]) Available() bool {
+	if e == nil {
+		return false
+	}
 	return !e.failure && e.holdUntil.Before(time.Now())
 }
 
 func (e *Elem[T]) MarkAsFailure() {
+	if e == nil {
+		return
+	}
 	e.failure = true
 }
 
 func (e *Elem[T]) MarkAsHold(duration time.Duration) {
+	if e == nil {
+		return
+	}
 	e.holdUntil = time.Now().Add(duration)
 }
 
 func (e *Elem[T]) MarkAsAvailable() {
+	if e == nil {
+		return
+	}
 	e.failure = false
 	e.holdUntil = time.Time{}
 }
