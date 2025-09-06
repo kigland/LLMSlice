@@ -24,15 +24,14 @@ func (s *SliceM[T]) Append(key string, item T) {
 	s.items[key].Append(item)
 }
 
-func (s *SliceM[T]) Get(key string) T {
+func (s *SliceM[T]) Get(key string) TContext[T] {
 	if key == "" {
 		key = s.DefaultKey
 	}
 	s.rw.RLock()
 	defer s.rw.RUnlock()
 	if s.items[key] == nil {
-		var v T
-		return v
+		return nil
 	}
 	return s.items[key].Get()
 }
