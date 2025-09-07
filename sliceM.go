@@ -25,7 +25,7 @@ func (s *SliceM[T]) Append(key string, items ...T) *SliceM[T] {
 	return s
 }
 
-func (s *SliceM[T]) Get(key string) TContext[T] {
+func (s *SliceM[T]) Get(key string) *Elem[T] {
 	if key == "" {
 		key = s.DefaultKey
 	}

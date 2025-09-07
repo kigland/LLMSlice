@@ -81,7 +81,7 @@ func (s *Slice[T]) Append(items ...T) *Slice[T] {
 	return s
 }
 
-func (s *Slice[T]) Get() TContext[T] {
+func (s *Slice[T]) Get() *Elem[T] {
 	s.rw.RLock()
 	defer s.rw.RUnlock()
 	if len(s.items) == 0 {
@@ -108,7 +108,7 @@ func (s *Slice[T]) getOrNil() *Elem[T] {
 	return nil
 }
 
-func (s *Slice[T]) MustGet(sleep time.Duration) TContext[T] {
+func (s *Slice[T]) MustGet(sleep time.Duration) *Elem[T] {
 	s.rw.RLock()
 	defer s.rw.RUnlock()
 	if len(s.items) == 0 {
